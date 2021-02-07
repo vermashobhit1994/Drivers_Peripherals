@@ -9,6 +9,9 @@
 #ifndef INC_STM32F446XX_H_
 #define INC_STM32F446XX_H_
 
+//To use NULL in SPI_TXE_Interrupt_Handle function .
+#include<stddef.h>
+
 /*volatile short notation*/
 #define __vo volatile
 
@@ -123,20 +126,20 @@
 
 /* ******************* APB1 bus peripherals base addresses*/
 /*Defining the peripheral base address on the APB1 bus*/
-#define I2C1_BASE_ADDR        (APB1_PERIPH_BASE_ADDR+0x5400)
-#define I2C2_BASE_ADDR        APB1_PERIPH_BASE_ADDR+0x5800
-#define I2C3_BASE_ADDR        APB1_PERIPH_BASE_ADDR+0x5C00
+#define I2C1_BASE_ADDR        (APB1_PERIPH_BASE_ADDR+0x5400U)
+#define I2C2_BASE_ADDR        (APB1_PERIPH_BASE_ADDR+0x5800U)
+#define I2C3_BASE_ADDR        (APB1_PERIPH_BASE_ADDR+0x5C00U)
 
-#define USART2_BASE_ADDR      APB1_PERIPH_BASE_ADDR+0x4400
-#define USART3_BASE_ADDR      APB1_PERIPH_BASE_ADDR+0x4800
-#define UART4_BASE_ADDR      APB1_PERIPH_BASE_ADDR+0x4C00
-#define UART5_BASE_ADDR      APB1_PERIPH_BASE_ADDR+0x5000
+#define USART2_BASE_ADDR      (APB1_PERIPH_BASE_ADDR+0x4400U)
+#define USART3_BASE_ADDR      (APB1_PERIPH_BASE_ADDR+0x4800U)
+#define UART4_BASE_ADDR       (APB1_PERIPH_BASE_ADDR+0x4C00U)
+#define UART5_BASE_ADDR       (APB1_PERIPH_BASE_ADDR+0x5000U)
 
 #define SPI2_BASE_ADDR        (APB1_PERIPH_BASE_ADDR+0x3800)
 #define SPI3_BASE_ADDR        (APB1_PERIPH_BASE_ADDR+0x3C00)
 
 
-/*Defining the peripheral base address on the APB2 bus*/
+/*peripheral base address on the APB2 bus*/
 
 #define EXTI_BASE_ADDR        (APB2_PERIPH_BASE_ADDR+0x3C00)
 
@@ -145,8 +148,8 @@
 
 #define SYSCFG_BASE_ADDR      (APB2_PERIPH_BASE_ADDR+0x3800)
 
-#define USART1_BASE_ADDR      (APB2_PERIPH_BASE_ADDR+0x1000)
-#define USART6_BASE_ADDR      (APB2_PERIPH_BASE_ADDR+0x1400)
+#define USART1_BASE_ADDR      (APB2_PERIPH_BASE_ADDR+0x1000U)
+#define USART6_BASE_ADDR      (APB2_PERIPH_BASE_ADDR+0x1400U)
 
 /*************************************************************************************************************/
 
@@ -157,11 +160,14 @@
 typedef struct
 {
 	__vo uint32_t MODER; //GPIO port mode register
+
 	__vo uint32_t OTYPER;//GPIO port output type register
 	__vo uint32_t OSPEEDR;//GPIO port output speed register
 	__vo uint32_t PUPDR;//GPIO port pull-up/pull-down register
 	__vo uint32_t IDR;//GPIO port input data register
 	__vo uint32_t ODR;//GPIO port output data register
+
+
 	__vo uint32_t BSRR;//GPIO port bit set/reset register
 	__vo uint32_t LCKR;//GPIO port configuration lock register
 	__vo uint32_t AFR[2];//AFR[0] -> for the alternate function low register and AFR[1] is for AFRH. GPIO Port configuration Alternate functionality register
@@ -243,15 +249,42 @@ typedef struct
 	__vo uint32_t                SPI_CRCPR;/* SPI CRC polynomial register. Address Offset = 0x10*/
 	__vo uint32_t                SPI_RXCRCR;/* SPI RX CRC register. Address Offset = 0x14*/
 	__vo uint32_t                SPI_TXCRCR;/* SPI TX CRC register. Address Offset = 0x18*/
-	__vo uint32_t                SPI_I2SCFGR;/* SPI_I 2 S configuration register . Address Offset = 0x1C*/
-	__vo uint32_t                SPI_I2SPR;/* SPI_I 2 S prescaler register. Address Offset = 0x20*/
+	__vo uint32_t                SPI_I2SCFGR;/* SPI_I2S configuration register . Address Offset = 0x1C*/
+	__vo uint32_t                SPI_I2SPR;/* SPI_I2S prescaler register. Address Offset = 0x20*/
 }SPI_RegDef_t;
+
+
+/* Generic Register Defination structure for the i2c Peripheral*/
+typedef struct
+{
+	__vo uint32_t                I2C_CR[2];/* I2C_CR[0] for I2C Control Register 1, Address Offset = 0x00 and I2C_CR[1] for I2C Control Register 2, Address offset = 0x04*/
+	__vo uint32_t                I2C_OAR[2];/* I2C_OAR[0] for I2C Own Address Register1 , Address offset = 0x08 and I2C_OAR[1] for I2C Own Address Register 2, Address offset = 0x0C*/
+	__vo uint32_t                I2C_DR ; /* I2C Data Register , Address Offset = 0x10*/
+	__vo uint32_t                I2C_SR[2];/* I2C_SR[0] for I2C Status Register1 , Address offset = 0x14 and I2C_SR[1] for I2C Status Register 2, Address offset = 0x18*/
+	__vo uint32_t                I2C_CCR;/* I2C Clock Control Register , Address Offset = 0x1C*/
+	__vo uint32_t                I2C_TRISE;/* I2C TRISE Register , Address Offset = 0x20*/
+	__vo uint32_t                I2C_FLTR;/* I2C FLTR Register , Address Offset = 0x24*/
+
+}I2C_RegDef_t;
+
+
+/*Generic Register Defination Structure for USART Peripheral */
+typedef struct
+{
+	__vo uint32_t   USART_SR;
+	__vo uint32_t   USART_DR;
+	__vo uint32_t   USART_BRR;
+	__vo uint32_t   USART_CR[3];
+	__vo uint32_t   USART_GTPR;
+
+}USART_RegDef_t;
+
 
 /************************ Peripheral Register Definition Structure Ends ************************************************/
 /************************************************************************************************************************/
 
 
-/*Peripheral definitions macros i.e the peripheral base address typecast to stuct type for the GPIOx register*/
+/*Peripheral definitions macros i.e the peripheral base address typecast to stuct type for particular peripheral*/
 /**************************************************************************************************************/
 
 /* Here the GPIOx would store the base address of the peripheral and  is treated as pointer*/
@@ -274,12 +307,25 @@ typedef struct
 /*SYSCFG Peripheral Definition*/
 #define SYSCFG   ((SYSCFG_RegDef_t*)SYSCFG_BASE_ADDR)
 
-/*SPI Peripheral Definition*/
+/*SPI Peripheral Definition Macros */
 #define SPI1        ((SPI_RegDef_t*)SPI1_BASE_ADDR)
 #define SPI2        ((SPI_RegDef_t*)SPI2_BASE_ADDR)
 #define SPI3        ((SPI_RegDef_t*)SPI3_BASE_ADDR)
 #define SPI4        ((SPI_RegDef_t*)SPI4_BASE_ADDR)
 
+/* I2C Peripheral Definition Macros*/
+#define I2C1       ((I2C_RegDef_t*)I2C1_BASE_ADDR)
+#define I2C2       ((I2C_RegDef_t*)I2C2_BASE_ADDR)
+#define I2C3       ((I2C_RegDef_t*)I2C3_BASE_ADDR)
+
+
+/* USART Peripheral Defination Macros */
+#define USART1      ((USART_RegDef_t*)USART1_BASE_ADDR)
+#define USART2      ((USART_RegDef_t*)USART2_BASE_ADDR)
+#define USART3      ((USART_RegDef_t*)USART3_BASE_ADDR)
+#define UART4       ((USART_RegDef_t*)UART4_BASE_ADDR)
+#define UART5       ((USART_RegDef_t*)UART5_BASE_ADDR)
+#define USART6      ((USART_RegDef_t*)USART6_BASE_ADDR)
 
 
 /********************** Peripheral Definition Macros Ends **********************************************************/
@@ -287,6 +333,7 @@ typedef struct
 
 /*****************************************************************************************************************************/
 /********************************************CLOCK ENABLING FOR PERIPHERALS***************************************************/
+
 
 /*Clock Enable Macro for the GPIOx Peripheral*/
 #define GPIOA_PERI_CLK_EN() (RCC -> RCC_AHB1ENR |= (1<<0))//High the 0th bit of the AHB1ENR of RCC to enable GPIOA clock.
@@ -306,7 +353,7 @@ typedef struct
 #define I2C3_PERI_CLK_EN()  (RCC -> RCC_APB1ENR |= (1<<23)) //high the 23rd bit to enable I2C3
 
 //clock enable Macro for the SPIx peripheral
-#define SPI1_PERI_CLK_EN()  (RCC -> RCC_APB2ENR |= (1<<12)) //high the 12th bit of RCC_APB2ENR to enable SPI1 Clock.
+#define SPI1_PERI_CLK_EN()  ( (RCC -> RCC_APB2ENR) |= (1<<12)) //high the 12th bit of RCC_APB2ENR to enable SPI1 Clock.
 #define SPI2_PERI_CLK_EN()  (RCC -> RCC_APB1ENR |= (1<<14)) //high the 14th bit of RCC_APB1ENR to enable SPI2 Clock.
 #define SPI3_PERI_CLK_EN()  (RCC -> RCC_APB1ENR |= (1<<15))//high the 15th bit of RCC_APB1ENR to enable SPI3 Clock.
 #define SPI4_PERI_CLK_EN()  (RCC -> RCC_APB2ENR |= (1<<13))//high the 13th bit of RCC_APB2ENR to enable SPI4 Clock.
@@ -358,7 +405,7 @@ typedef struct
 //clock Disable Macro for the SYSCFG peripheral
 #define SYSCFG_PERI_CLK_DI() (RCC -> RCC_APB2ENR &= ~(1<<14))
 
-/*macros to reset the GPIOx peripheral
+/*macros to reset the GPIOx peripheral to their reset values
 Here first we need to set the bit for corresponding peripheral then reset the bit
 Here it is done by do while loop to include more than two statements in a single macro.
 This do while loop is called as do while condition zero loop */
@@ -373,6 +420,32 @@ This do while loop is called as do while condition zero loop */
 #define GPIOI_REG_RESET()    do { (RCC -> RCC_AHB1RSTR |= (1<<8)) ;  (RCC -> RCC_AHB1RSTR &= ~(1<<8));}while(0)
 
 
+/* Macros to reset the SPI Peripheral to their Reset Values*
+ *
+ */
+#define SPI1_REG_RESET()    do { (RCC -> RCC_APB2RSTR |= (1<<12)) ;  (RCC -> RCC_APB2RSTR &= ~(1<<12));}while(0)//set and clear the 12th bit of APB2RSTR
+#define SPI2_REG_RESET()    do { (RCC -> RCC_APB1RSTR |= (1<<14)) ;  (RCC -> RCC_APB1RSTR &= ~(1<<14));}while(0)//set and clear the 14th bit of APB1RSTR
+#define SPI3_REG_RESET()    do { (RCC -> RCC_APB1RSTR |= (1<<15)) ;  (RCC -> RCC_APB1RSTR &= ~(1<<15));}while(0)//set and clear the 15th bit of APB1RSTR
+#define SPI4_REG_RESET()    do { (RCC -> RCC_APB2RSTR |= (1<<13)) ;  (RCC -> RCC_APB2RSTR &= ~(1<<13));}while(0)//set and clear the 13th bit of APB2RSTR
+
+/* Macros to reset  the I2C Peripheral to their Reset Values
+ */
+#define I2C1_REG_RESET()    do { (RCC -> RCC_APB1RSTR |= (1<<21)); (RCC -> RCC_APB1RSTR &= ~(1<<21));}while(0)//set and clear the 21st bit of APB1RSTR
+#define I2C2_REG_RESET()    do { (RCC -> RCC_APB1RSTR |= (1<<22)); (RCC -> RCC_APB1RSTR &= ~(1<<22));}while(0)//set and clear the 22th bit of APB1RSTR
+#define I2C3_REG_RESET()    do { (RCC -> RCC_APB1RSTR |= (1<<23)); (RCC -> RCC_APB1RSTR &= ~(1<<23));}while(0)//set and clear the 22th bit of APB1RSTR
+
+/* Macros to reset  the USART and UART Peripheral to their Reset Values
+ */
+#define USART1_REG_RESET()  do { (RCC -> RCC_APB2RSTR |= (1<<4)); (RCC -> RCC_APB2RSTR &= ~(1<<4));}while(0)//set and clear the 4th bit of APB1RSTR
+#define USART2_REG_RESET()  do { (RCC -> RCC_APB1RSTR |= (1<<17)); (RCC -> RCC_APB1RSTR &= ~(1<<17));}while(0)//set and clear the 4th bit of APB1RSTR
+#define USART3_REG_RESET()  do { (RCC -> RCC_APB1RSTR |= (1<<18)); (RCC -> RCC_APB1RSTR &= ~(1<<18));}while(0)//set and clear the 4th bit of APB1RSTR
+#define UART4_REG_RESET()   do { (RCC -> RCC_APB1RSTR |= (1<<19)); (RCC -> RCC_APB1RSTR &= ~(1<<19));}while(0)//set and clear the 4th bit of APB1RSTR
+#define UART5_REG_RESET()   do { (RCC -> RCC_APB1RSTR |= (1<<20)); (RCC -> RCC_APB1RSTR &= ~(1<<20));}while(0)//set and clear the 4th bit of APB1RSTR
+#define USART6_REG_RESET()  do { (RCC -> RCC_APB2RSTR |= (1<<5)); (RCC -> RCC_APB2RSTR &= ~(1<<5));}while(0)//set and clear the 4th bit of APB1RSTR
+
+
+
+
 /*Macro to select the Code to select the GPIO Port*/
 #define GPIO_BASE_ADDR_TO_CODE(x)   ( (x == GPIOA) ? 0:\
 		                              (x == GPIOB) ? 1:\
@@ -384,6 +457,7 @@ This do while loop is called as do while condition zero loop */
 
 
 /* Macro for the IRQ(Interrupt Request ) numbers from the Vector Table*/
+/* these are related to GPIO Ports */
 #define IRQ_NO_EXTI0                   6
 #define IRQ_NO_EXTI1                   7
 #define IRQ_NO_EXTI2                   8
@@ -393,22 +467,33 @@ This do while loop is called as do while condition zero loop */
 #define IRQ_NO_EXTI_15_10              40
 
 
+/* Macro definations corresponding to SPI IRQ Numbers*/
+/* This is taken from vector table */
+#define IRQ_NO_SPI1                   35
+#define IRQ_NO_SPI2                   36
+#define IRQ_NO_SPI3                   51
+#define IRQ_NO_SPI4                   84
+
+
+
+
 
 /*************************************************************************************************************
  * **********************************Some Generic Macros Used by driver header file***************************/
-#define ENABLE              1
-#define DISABLE             0
-#define SET                 ENABLE
-#define RESET               DISABLE
-#define GPIO_PIN_SET        SET
-#define GPIO_PIN_RESET      RESET
-#define FLAG_RESET          RESET        //macro used by SPI driver file to check the status whether data is there or not
-#define FLAG_SET            SET          //macro used by SPI driver file to check the status whether data is there or not
+#define ENABLE                    1
+#define DISABLE                   0
+#define SET                       ENABLE
+#define RESET                     DISABLE
+#define GPIO_PIN_SET              SET
+#define GPIO_PIN_RESET            RESET
+#define SPI_FLAG_RESET            RESET        //macro used by SPI driver file to check the status whether data is there or not
+#define SPI_FLAG_SET              SET          //macro used by SPI driver file to check the status whether data is there or not
 
 /*************************************************************************************************************/
 
 /*************************************************************************************************************/
 /************************************* BIT Position Defination Macros For SPI Peripheral***********************/
+/*************************************************************************************************************/
 
 /* Macros for SPI_CR1 Register*/
 #define SPI_CR1_CPHA                     0
@@ -452,12 +537,141 @@ This do while loop is called as do while condition zero loop */
 
 
 
-/************************************* BIT Position Defination Macros ENDS ***********************/
+/************************************* BIT Position Defination Macros for SPI ENDS ***********************/
+/*************************************************************************************************************/
+
+/*************************************************************************************************************/
+/**********BIT Position Defination Macros for I2C START ***********************/
+
+//For I2C Control Register 1
+#define I2C_CR1_PE                   0
+#define I2C_CR1_SMBUS                1
+#define I2C_CR1_SMBTYPE              3
+#define I2C_CR1_ENARP                4
+#define I2C_CR1_ENPEC                5
+#define I2C_CR1_ENGC                 6
+#define I2C_CR1_NOSTRETCH            7
+#define I2C_CR1_START                8
+#define I2C_CR1_STOP                 9
+#define I2C_CR1_ACK                  10
+#define I2C_CR1_POS                  11
+#define I2C_CR1_PEC                  12
+#define I2C_CR1_ALERT                13
+#define I2C_CR1_SWRST                15
+
+//For I2C Control Register 2
+#define I2C_CR2_FREQ                 0
+#define I2C_CR2_ITERREN              8
+#define I2C_CR2_ITEVTEN              9
+#define I2C_CR2_ITBUFEN              10
+#define I2C_CR2_DMAEN                11
+#define I2C_CR2_LAST                 12
+
+//For I2C status Register 1
+#define I2C_SR1_SB                    0
+#define I2C_SR1_ADDR                  1
+#define I2C_SR1_BTF                   2
+#define I2C_SR1_ADD10                 3
+#define I2C_SR1_STOPF                 4
+#define I2C_SR1_RXNE                  6
+#define I2C_SR1_TXE                   7
+#define I2C_SR1_BERR                  8
+#define I2C_SR1_ARLO                  9
+#define I2C_SR1_AF                    10
+#define I2C_SR1_OVR                   11
+#define I2C_SR1_PECERR                12
+#define I2C_SR1_TIMEOUT               14
+#define I2C_SR1_SMBALERT              15
+
+//For I2C status Register 2
+#define I2C_SR2_MSL                   0
+#define I2C_SR2_BUSY                  1
+#define I2C_SR2_TRA                   2
+#define I2C_SR2_GENCALL               4
+#define I2C_SR2_SMBDEFAULT            5
+#define I2C_SR2_SMBHOST               6
+#define I2C_SR2_DUALF                 7
+#define I2C_SR2_PEC                   8
+
+//For I2C Clock Control Register
+#define I2C_CCR_CCR                   0
+#define I2C_CCR_DUTY                  14
+#define I2C_CCR_F_S                   15
+
+
+/************************************* BIT Position Defination Macros for I2C ENDS ***********************/
 /*************************************************************************************************************/
 
 
+/*************************************************************************************************************/
+/**********BIT Position Defination Macros for USART/UART START***********************/
 
+//for SR Register
+#define USART_SR_PE            0
+#define USART_SR_FE            1
+#define USART_SR_NF            2
+#define USART_SR_ORE           3
+#define USART_SR_IDLE          4
+#define USART_SR_RXNE          5
+#define USART_SR_TC            6
+#define USART_SR_TXE           7
+#define USART_SR_LBD           8
+#define USART_SR_CTS           9
+
+
+//For CR1 Register
+#define USART_CR1_SBK          0
+#define USART_CR1_RWU          1
+#define USART_CR1_RE           2
+#define USART_CR1_TE           3
+#define USART_CR1_IDLEIE       4
+#define USART_CR1_RXNEIE       5
+#define USART_CR1_TCIE         6
+#define USART_CR1_TXEIE        7
+#define USART_CR1_PEIE         8
+#define USART_CR1_PS           9
+#define USART_CR1_PCE          10
+#define USART_CR1_WAKE         11
+#define USART_CR1_M            12
+#define USART_CR1_UE           13
+#define USART_CR1_OVR8         15
+
+
+//for CR2 Register
+#define USART_CR2_LBDL         5
+#define USART_CR2_LBDIE        6
+#define USART_CR2_LBCL         8
+#define USART_CR2_CPHA         9
+#define USART_CR2_CPOL         10
+#define USART_CR2_CLKEN        11
+#define USART_CR2_STOP         12
+#define USART_CR2_LINEN        14
+
+//for CR3 Register
+#define USART_CR3_EIE           0
+#define USART_CR3_IREN          1
+#define USART_CR3_IRLP          2
+#define USART_CR3_HDSEL         3
+#define USART_CR3_NACK          4
+#define USART_CR3_SCEN          5
+#define USART_CR3_DMAR          6
+#define USART_CR3_DMAT          7
+#define USART_CR3_RTSE          8
+#define USART_CR3_CTSE          9
+#define USART_CR3_CTSIE         10
+#define USART_CR3_ONEBIT        11
+
+
+
+
+
+
+
+/*************************************************************************************************************/
+/**********BIT Position Defination Macros for USART/UART ENDS ***********************/
 
 #include"stm32f44xx_gpio_driver.h"//gpio device specific header file
 #include"stm32f44xx_spi_driver.h"//spi device specific header file
+#include"stm32f44xx_i2c_driver.h"//i2c device specific header file
+#include"stm32f44xx_usart_driver.h"//usart and uart both device specific header file
 #endif /* INC_STM32F446XX_H_ */

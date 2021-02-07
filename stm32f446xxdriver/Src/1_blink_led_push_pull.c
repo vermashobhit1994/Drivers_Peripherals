@@ -8,13 +8,15 @@
 
 //Here the LED is connected to PA5 (read from schematic)
 #include"stm32f446xx.h"
-
+#include<time.h>
+#include<stdio.h>
 #define ACTIVATE
 #ifdef ACTIVATE
 
-void delay_ms(void)
+void delay_ms(uint32_t value )
 {
-	for(int i = 0; i < 500000/2; i++);
+	clock_t time = 1000;
+	printf("%ld",time);
 }
 int main(void)
 {
@@ -34,7 +36,7 @@ int main(void)
 	{
 
 		GPIO_ToggleOutputPin(GPIOA, GPIO_PIN_NO_5);
-		delay_ms();
+		delay_ms(660000);
 	}
 
 
