@@ -1,0 +1,5 @@
+"Bootloader/Src/bootloader.o"
+"Bootloader/Src/syscalls.o"
+"Bootloader/Src/sysmem.o"
+"Startup/startup_stm32f446retx.o"
+"stm32f446xx_driver/Src/stm32f446xx_gpio_driver.o"

@@ -1,0 +1,4 @@
+bootloader.c:54:13:bootloader_jump_to_user_app	32	static,ignoring_inline_asm
+bootloader.c:98:6:Button_Init	4	static
+bootloader.c:112:6:LED_Init	4	static
+bootloader.c:128:5:main	16	static

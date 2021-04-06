@@ -1,0 +1,2 @@
+stm32f446xx_gpio_driver.c:7:6:GPIO_Read_Input_Pin	24	static
+stm32f446xx_gpio_driver.c:13:6:GPIO_Write_Output_Pin	16	static
