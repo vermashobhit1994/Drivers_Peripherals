@@ -1,0 +1,2 @@
+Install the 64bit binaries for libncurses5 by below command :
+sudo apt-get install libncurses5

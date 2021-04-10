@@ -1,0 +1,5 @@
+delay.c:21:6:TIMER6_Init	16	static
+delay.c:65:6:delay_us	16	static
+delay.c:94:6:delay_ms	24	static
+delay.c:121:6:mdelay	24	static
+delay.c:126:6:udelay	24	static

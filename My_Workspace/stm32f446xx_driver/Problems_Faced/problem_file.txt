@@ -1,0 +1,3 @@
+This file contains the problems that I've faced during the upload and making of driver
+1. Problem Statement "Break at address "0xf3af4804" with no debug information available, or outside of program code. "
+This problem arises when we forget to uncheck exclude folder from build in Properties -> C/C++ Build

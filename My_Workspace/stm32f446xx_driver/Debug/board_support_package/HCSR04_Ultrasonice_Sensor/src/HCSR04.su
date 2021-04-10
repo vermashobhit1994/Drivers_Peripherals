@@ -1,0 +1,2 @@
+HCSR04.c:10:9:HCSR04_Init	32	static
+HCSR04.c:50:8:HCSR04_Sensor_Read	40	static

@@ -1,0 +1,7 @@
+stm32f44xx_uart_driver.c:28:6:USART_PeriClockCtrl	16	static
+stm32f44xx_uart_driver.c:75:6:USART_PeripheralControl	16	static
+stm32f44xx_uart_driver.c:93:6:USART_ClearFlag	16	static
+stm32f44xx_uart_driver.c:110:9:USART_GetFlagStatus	16	static
+stm32f44xx_uart_driver.c:131:6:USART_IRQInterruptConfig	16	static
+stm32f44xx_uart_driver.c:195:6:USART_IRQPriorityConfig	24	static
+stm32f44xx_uart_driver.c:223:6:USART_DeInit	16	static

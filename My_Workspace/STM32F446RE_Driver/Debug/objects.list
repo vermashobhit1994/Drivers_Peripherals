@@ -1,0 +1,6 @@
+"Application/Src/LED_ON_SOME_TIME_Btn_Press.o"
+"Application/Src/main.o"
+"Application/Src/syscalls.o"
+"Application/Src/sysmem.o"
+"Driver/Src/STM32F446RE_GPIO_Driver.o"
+"Startup/startup_stm32f446retx.o"
